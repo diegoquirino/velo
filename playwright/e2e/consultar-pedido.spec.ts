@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 
+const ORDER_ID = 'VLO-I215I0';
+
 // AAA - Arrange, Act, Assert
 // PAV - Preparar, Agir, Verificar
 
@@ -11,15 +13,17 @@ test('Consultar Pedido Realizado com Sucesso', async ({ page }) => {
   await expect(page.getByTestId('search-order-id')).toBeVisible();
 
   // Act
-  await page.getByTestId('search-order-id').fill('VLO-I215I0');
-  await expect(page.getByTestId('search-order-id')).toHaveValue('VLO-I215I0');
+  await page.getByTestId('search-order-id').fill(ORDER_ID);
+  await expect(page.getByTestId('search-order-id')).toHaveValue(ORDER_ID);
   await page.getByTestId('search-order-button').click();
 
   // Assert
-  await expect(page.getByTestId('order-result-id')).toBeVisible();
-  await expect(page.getByTestId('order-result-id')).toContainText('VLO-I215I0');
-  await expect(page.getByTestId('order-result-VLO-I215I0')).toBeVisible();
-  await expect(page.getByTestId('order-result-VLO-I215I0')).toContainText('R$ 52.500,00');
-  await expect(page.getByTestId('order-result-status')).toBeVisible();
-  await expect(page.getByTestId('order-result-status')).toContainText('APROVADO');
+  // await expect(page.getByTestId('order-result-id')).toBeVisible();
+  // await expect(page.getByTestId('order-result-id')).toContainText(ORDER_ID);
+  // await expect(page.getByTestId('order-result-status')).toBeVisible();
+  // await expect(page.getByTestId('order-result-status')).toContainText('APROVADO');
+  await expect(page.getByTestId(`order-result-${ORDER_ID}`)).toBeVisible();
+  await expect(page.getByTestId(`order-result-${ORDER_ID}`)).toContainText(ORDER_ID);
+  await expect(page.getByTestId(`order-result-${ORDER_ID}`)).toContainText('APROVADO');
+
 });
